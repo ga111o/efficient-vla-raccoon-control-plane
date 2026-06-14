@@ -1,0 +1,151 @@
+# pipeline.toml — 단계별 설정을 선언적으로 기술한다.
+#
+# run_pipeline.py 가 시작 시 이 파일을 tomllib(Py3.11 표준, 의존성 0)로 읽어
+# 코드 내 STAGES 의 기본값을 오버라이드한다. 파일이 없으면 STAGES 를 그대로 쓴다.
+#
+# 우선순위:  CLI(--only/--skip/--enable …) > pipeline.toml > 코드 내 STAGES
+# 다른 파일을 쓰려면:  python pipeline/run_pipeline.py --config myconfig.toml
+#
+# 각 [stage.<id>] 블록에서:
+#   enabled = true|false      # 기본 실행 대상 포함 여부 (생략 시 STAGES 값 유지)
+#   args    = ["--flag", "v"] # 해당 스크립트로 그대로 전달될 CLI 토큰 (생략 시 STAGES 값 유지)
+#
+# 인자만 바꾸는 실험은 이제 코드 수정 없이 이 파일만 편집하면 된다.
+
+[stage.000]
+enabled = true
+args = []
+
+[stage.010]
+enabled = false
+# --num-workers auto → min(os.cpu_count(), num_episodes) 로 자동 결정(과구독 방지).
+args = ["--num-workers", "auto"]
+
+[stage.015]
+# pick-and-stack 데모 생성(별도 raw root). grasp-only 면 enabled=false 로 두고
+# 020 의 --with-stack 도 제거한다.
+#
+# --hz 10: 로깅 주파수. 평가(085 --hz)와 반드시 같은 값으로 묶을 것 — 갈라지면
+# train↔rollout 타이밍 불일치로 grasp 가 전부 빗나간다(design_v7_fix3 원인 A).
+# v6 의 hz=50 은 그리퍼 전환 프레임 비중을 희석(라벨 불균형 우려)해 hz=10 으로
+# 회귀했고, hz=10 데이터로 재생성·재학습 완료(design_v8_fix4). 프레임당 EE 델타는
+# hz=50 대비 ~5배(≈5 cm) — 085 의 --max-delta-xyz 는 measure_action_stats.py 로
+# 측정한 ‖dxyz‖ q99×1.2 에 맞춘다.
+#
+# --noslip-iterations 50: XML 의 noslip_iterations=100 을 런타임에 50 으로 낮춰
+# 스텝당 물리 비용을 줄인다(015 가속). noslip 은 마찰 잔류 slip 후처리 PGS 패스라
+# 낮출수록 빠르지만 그래스핑 중 큐브 slip 위험↑. 작은 샘플로 success_counts 가
+# 100 과 동등하게 유지되는지 확인하고, 운반 중 slip 보이면 다시 올린다.
+#
+# --num-episodes 2000: 기존 빌드는 400 ep(26k transition)뿐이라 grasp 정밀도(085 진단
+# (다))에 데이터가 부족했다. 400→2000(5×)으로 늘려 정밀 grasp 를 여러 구도로 학습한다.
+# 개수보다 다양성(큐브 spawn 위치/색·그리퍼 시작 자세)이 더 중요. 생성 시간(CPU 병렬)과
+# 학습 시간이 같이 늘므로 2000 을 시간/효과 균형점으로 둔다(여유 있으면 4000).
+# 생성 후 measure_action_stats.py 를 새 데이터에 돌려 085 의 --max-delta-xyz 를 재확인.
+#
+# --camera-jitter 0.02: episode 마다 front_view 카메라 위치를 축별 ±0.02m(2cm) 균등
+# 흔들어 시점을 다양화한다(카메라 방향은 고정, --seed 로 재현 가능). 같은 장면을 살짝
+# 다른 구도로 학습시켜 시점 과적합을 줄이는 도메인 랜덤화. 0 이면 XML 고정 시점.
+# 평가(085)는 고정 시점이므로 과하게 키우면 train↔eval 시점 분포가 벌어진다 — 2cm 유지.
+# grasp(010)은 이 인자를 넘기지 않아 영향 없음(worker 기본 0.0).
+enabled = false
+args = ["--num-workers", "auto", "--num-episodes", "4000", "--hz", "10", "--noslip-iterations", "50", "--camera-jitter", "0.02"]
+
+[stage.020]
+enabled = false
+# stack 단독 변환: stack raw root 를 base 로 변환(--with-stack 없음 → append 단계 생략).
+# grasp 도 학습하려면 --raw_root 를 빼고(grasp 기본) --with-stack 을 다시 추가한다.
+args = ["--val_ratio", "0.1", "--raw_root", "../raccoon_pick_and_stack", "--drop_idle_steps", "--min_ee_delta_norm", "1e-3"]
+
+[stage.030]
+enabled = false
+args = []
+
+[stage.040]
+enabled = false
+# --stack: grasp raw root 가 없으므로 stack raw root 의 episode_* 를 시각화.
+args = ["--episode-index", "0", "--num-frames", "5", "--stack"]
+
+[stage.050]
+enabled = false
+# A100 80GB
+# 6000 step ≈ 48 epoch. accuracy 곡선이 평탄해지면 그 전에 중단하고,
+# save_steps=1000 체크포인트들을 closed-loop 성공률로 비교해 best 선택.
+args = [
+  "--batch_size", "16",
+  "--grad_accumulation_steps", "1",
+  "--lora_rank", "32",
+  "--learning_rate", "5e-4",
+  "--max_steps", "11000",
+  "--save_steps", "2000",
+]
+
+[stage.051]
+# 비대칭 혼합 정밀도 + 샌드위치 QLoRA(단일 RTX 5080 16GB). 050(all-linear LoRA, batch16
+# A100용)의 대안 — 050 은 5080 16GB 에선 OOM 이라 이미 비활성. 양자화 학습은 이 051 로.
+# (run_pipeline 으로 자동 실행하려면 enabled=true. 보통은 CLI 로 051 을 직접 실행.)
+#  - --backbone-precision fp8: LLM 백본을 FP8 weight-only 로 동결(≈7.5GB). 서빙은 fp8_w8a8.
+#  - --vision-precision bf16: 학습 중 vision 은 BF16(LoRA r=16 미세조정). 서빙 시 int8 PTQ.
+#  - projector / lm_head(action head) 는 정책상 BF16 고정(full FT) — 절대 양자화 금지.
+#  - batch 4 × grad-accum 4 = 유효 배치 16. bs=1 에서 peak 11.4GB 관측 → bs=4 ≈ 13–14GB.
+#    16GB 에서 OOM 이면 batch 2 / accum 8 로(유효 배치 유지).
+#  - --max_steps 32000: 015 를 2000 ep(≈130k transition)로 늘렸을 때 유효배치 16 기준
+#    1 epoch≈8125 step → 32000≈4 epoch. 데이터 양을 바꾸면 epoch 로 환산해 맞춘다
+#    (1 epoch = num_transitions / (batch×accum)). step 수보다 save_steps 체크포인트를
+#    085 closed-loop 성공률로 비교해 best 를 고르는 게 핵심(train loss/acc 아님).
+#    400 ep 그대로면 11000(≈6.8 epoch), 4000 ep 면 ~50000(≈3 epoch).
+#  - torchao 폴백이 필요하면 --quant-backend bitsandbytes --backbone-precision int8|nf4.
+enabled = true
+args = ["--backbone-precision", "fp8", "--quant-backend", "torchao",
+        "--vision-precision", "bf16", "--lora_rank", "32", "--vision_lora_rank", "16",
+        "--batch_size", "4", "--grad_accumulation_steps", "4",
+        "--learning_rate", "5e-4", "--max_steps", "5000", "--save_steps", "500"]
+
+[stage.055]
+enabled = true
+args = []
+
+[stage.060]
+enabled = false
+args = []
+
+[stage.070]
+# FP8 W8A8 비대칭 서빙(권장): --precision fp8_w8a8 로 Blackwell 5세대 텐서코어 FP8 가속.
+#   백본 FP8(≈7.5GB) + vision INT8 PTQ + projector/lm_head BF16 고정. 결정론적 greedy
+#   디코딩(do_sample=False)은 서버 기본값. BF16 서빙으로 되돌리려면 --precision 제거(=bf16).
+enabled = false
+args = ["--host", "0.0.0.0", "--port", "8000", "--precision", "fp8_w8a8", "--vision-precision", "int8"]
+
+[stage.075]
+enabled = true
+# --stack: grasp raw root 가 없으므로 stack raw root 의 첫 episode_* 로 정확도 평가.
+args = ["--mode", "eval", "--num-steps", "3", "--stack"]
+
+[stage.080]
+enabled = false
+args = ["--num-episodes", "20", "--max-steps", "30"]
+
+[stage.085]
+# closed-loop stack 평가. train↔rollout 실행 조건을 맞춘다(design_v7_fix3·v8_fix4).
+#  - --hz 10: 생성 stage.015 의 --hz 와 반드시 동일. 갈라지면 타이밍 불일치로
+#    이미지↔액션·그리퍼 정렬이 깨져 grasp 가 전부 빗나간다(원인 A).
+#  - --max-steps 321: steps/ep p99 기준 상향. 예산은 결박 요인이 아님(아래 진단) —
+#    넉넉히 둬도 무해. 더 줄이려면 GPU 서버 hz=10 데이터에서 measure_action_stats.py
+#    로 p99 재측정(체크포인트 통계상 평균 65 step/ep → 진짜 p99 는 321보다 작을 것).
+#  - --max-delta-xyz 0.05: per-step xyz *축별* 클립. 체크포인트 dataset_statistics 의
+#    action q99=[x0.027,y0.011,z0.014]·max=[x0.043,…] → 0.05 는 축별 최대조차 안 자름
+#    (clip_hit_rate=0.0 과 일치). 조이면 정상 상위 1% 를 자르므로 0.05 유지.
+#  - 진단 확정(design_v8_fix4, 2026-06-13): (가)그리퍼 닫기 미발화·(나)클립·hz·IK·FK
+#    전부 배제. 체크포인트도 hz=10 학습 확정(q99 가 hz=50 대비 ~5×). 잔여 1차 원인은
+#    (다) grasp 위치/타이밍 — 정책이 큐브를 정확한 지점·시점에 못 잡는 BC 정밀도 문제라
+#    eval config 로는 안 고쳐짐. 세부 분기는 신규 grasp-moment 계측으로 판별:
+#    openvla_closed_loop_eval.py 가 per-episode 로 first_close_ee_z(닫는 순간 EE 높이)·
+#    first_close_xy_dist·min_xy_dist·cube_disp_xy 를 기록 → report diagnostics 의
+#    avg_first_close_ee_z/avg_min_xy_dist/avg_cube_disp_xy 로 hover헛닫기 vs xy정렬실패
+#    vs 잡았다놓침을 구분한다.
+#  - --num-workers auto: 에피소드를 멀티코어로 병렬 롤아웃(min(cpu_count, num_episodes)).
+#    모든 worker 가 같은 정책 서버(GPU 1개)를 HTTP 로 공유 — 추론은 서버에서 직렬화돼도
+#    CPU 무거운 mujoco sim/render 가 코어별로 겹쳐 돌아 전체 시간이 준다(010/015 와 동일).
+#    재현/디버깅으로 순차 실행하려면 "1" 로 둔다.
+enabled = true
+args = ["--num-episodes", "16", "--max-steps", "321", "--hz", "10", "--max-delta-xyz", "0.05", "--num-workers", "auto"]

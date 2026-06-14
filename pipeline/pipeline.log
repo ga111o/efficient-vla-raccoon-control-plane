@@ -1,0 +1,77 @@
+nohup: ignoring input
+2026-06-14 05:11:41 [run_pipeline] 설정 로드: /home/ga111o/document/lecture/physical_ai/assignemnt_mujoco/pipeline/pipeline.toml
+2026-06-14 05:11:41 [run_pipeline] 실행 순서: 000 -> 051 -> 055 -> 075 -> 085
+
+2026-06-14 05:11:41 ========================================================================
+2026-06-14 05:11:41 [1/5] STAGE 000  (000_check_env.py)
+2026-06-14 05:11:41   $ /home/ga111o/miniforge3/bin/python3 /home/ga111o/document/lecture/physical_ai/assignemnt_mujoco/pipeline/000_check_env.py
+2026-06-14 05:11:41 ========================================================================
+2026-06-14 05:11:41 RB_ROOT       = /home/ga111o/document/lecture/physical_ai/assignemnt_mujoco/Raccoonbot_Openvla
+2026-06-14 05:11:41 TFDS_DATA_DIR = /home/ga111o/document/lecture/physical_ai/assignemnt_mujoco/Raccoonbot_Openvla/tensorflow_datasets
+
+2026-06-14 05:11:41 [paths]
+2026-06-14 05:11:41   MUJOCO_DIR          = /home/ga111o/document/lecture/physical_ai/assignemnt_mujoco/Raccoonbot_Openvla/Mujoco
+2026-06-14 05:11:41   RACCOON_DATASET_DIR = /home/ga111o/document/lecture/physical_ai/assignemnt_mujoco/Raccoonbot_Openvla/Mujoco/raccoon_dataset
+2026-06-14 05:11:41   RLDS_BUILDER_DIR    = /home/ga111o/document/lecture/physical_ai/assignemnt_mujoco/Raccoonbot_Openvla/Mujoco/rlds_dataset_builder
+2026-06-14 05:11:41   OPENVLA_DIR         = /home/ga111o/document/lecture/physical_ai/assignemnt_mujoco/Raccoonbot_Openvla/openvla
+2026-06-14 05:11:41   TFDS_DATA_DIR       = /home/ga111o/document/lecture/physical_ai/assignemnt_mujoco/Raccoonbot_Openvla/tensorflow_datasets
+
+2026-06-14 05:11:41 [imports] (python = /home/ga111o/miniforge3/bin/python3 )
+2026-06-14 05:11:43   [ok ] torch: 2.5.1 cuda True
+2026-06-14 05:11:43   [FAIL] tensorflow: ModuleNotFoundError: No module named 'tensorflow'
+2026-06-14 05:11:43   [FAIL] dlimp: ModuleNotFoundError: No module named 'dlimp'
+2026-06-14 05:11:43   [FAIL] apache-beam: ModuleNotFoundError: No module named 'apache_beam'
+2026-06-14 05:11:43   [FAIL] tomli: ModuleNotFoundError: No module named 'tomli'
+
+2026-06-14 05:11:43 [nvidia-smi]
+2026-06-14 05:11:43 Sun Jun 14 05:11:43 2026       
+2026-06-14 05:11:43 +-----------------------------------------------------------------------------------------+
+2026-06-14 05:11:43 | NVIDIA-SMI 610.43.02              KMD Version: 610.43.02     CUDA UMD Version: 13.3     |
+2026-06-14 05:11:43 +-----------------------------------------+------------------------+----------------------+
+2026-06-14 05:11:43 | GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+2026-06-14 05:11:43 | Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+2026-06-14 05:11:43 |                                         |                        |               MIG M. |
+2026-06-14 05:11:43 |=========================================+========================+======================|
+2026-06-14 05:11:43 |   0  NVIDIA GeForce RTX 5080        Off |   00000000:2B:00.0  On |                  N/A |
+2026-06-14 05:11:43 |  0%   41C    P8             14W /  360W |      34MiB /  16303MiB |      0%      Default |
+2026-06-14 05:11:43 |                                         |                        |                  N/A |
+2026-06-14 05:11:43 +-----------------------------------------+------------------------+----------------------+
+
+2026-06-14 05:11:43 +-----------------------------------------------------------------------------------------+
+2026-06-14 05:11:43 | Processes:                                                                              |
+2026-06-14 05:11:43 |  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+2026-06-14 05:11:43 |        ID   ID                                                               Usage      |
+2026-06-14 05:11:43 |=========================================================================================|
+2026-06-14 05:11:43 |  No running processes found                                                             |
+2026-06-14 05:11:43 +-----------------------------------------------------------------------------------------+
+2026-06-14 05:11:43 [run_pipeline] STAGE 000 종료 (exit=0, ▲ 1.8s)
+
+2026-06-14 05:11:43 ========================================================================
+2026-06-14 05:11:43 [2/5] STAGE 051  (051_finetune_sandwich.py)
+2026-06-14 05:11:43   $ /home/ga111o/miniforge3/bin/python3 /home/ga111o/document/lecture/physical_ai/assignemnt_mujoco/pipeline/051_finetune_sandwich.py --backbone-precision fp8 --quant-backend torchao --vision-precision bf16 --lora_rank 32 --vision_lora_rank 16 --batch_size 4 --grad_accumulation_steps 4 --learning_rate 5e-4 --max_steps 32000 --save_steps 3000
+2026-06-14 05:11:43 ========================================================================
+2026-06-14 05:11:43 RB_ROOT       = /home/ga111o/document/lecture/physical_ai/assignemnt_mujoco/Raccoonbot_Openvla
+2026-06-14 05:11:43 TFDS_DATA_DIR = /home/ga111o/document/lecture/physical_ai/assignemnt_mujoco/Raccoonbot_Openvla/tensorflow_datasets
+
+2026-06-14 05:11:43 [run] (cwd=/home/ga111o/document/lecture/physical_ai/assignemnt_mujoco/Raccoonbot_Openvla/openvla)
+2026-06-14 05:11:43       $ /home/ga111o/miniforge3/bin/python3 vla-scripts/finetune_sandwich.py --vla_path openvla/openvla-7b --data_root_dir /home/ga111o/document/lecture/physical_ai/assignemnt_mujoco/Raccoonbot_Openvla/tensorflow_datasets --dataset_name raccoon_pick_place --run_root_dir /home/ga111o/document/lecture/physical_ai/assignemnt_mujoco/Raccoonbot_Openvla/openvla/openvla-runs --adapter_tmp_dir /home/ga111o/document/lecture/physical_ai/assignemnt_mujoco/Raccoonbot_Openvla/openvla/openvla-adapter-tmp --quant_backend torchao --backbone_precision fp8 --vision_precision bf16 --lora_rank 32 --vision_lora_rank 16 --llm_lora_mode all --train_vision_lora True --train_projector True --train_action_head True --batch_size 4 --grad_accumulation_steps 4 --max_steps 32000 --save_steps 3000 --learning_rate 0.0005 --val_interval_steps 500 --val_batches 10 --attn_implementation sdpa --gradient_checkpointing True --use_8bit_optimizer True --use_fast_tokenizer False --run_id_note sandwich-fp8
+
+2026-06-14 05:11:43 Traceback (most recent call last):
+2026-06-14 05:11:43   File "/home/ga111o/document/lecture/physical_ai/assignemnt_mujoco/Raccoonbot_Openvla/openvla/vla-scripts/finetune_sandwich.py", line 41, in <module>
+2026-06-14 05:11:43     import draccus
+2026-06-14 05:11:43 ModuleNotFoundError: No module named 'draccus'
+2026-06-14 05:11:43 Traceback (most recent call last):
+2026-06-14 05:11:43   File "/home/ga111o/document/lecture/physical_ai/assignemnt_mujoco/pipeline/051_finetune_sandwich.py", line 133, in <module>
+2026-06-14 05:11:43     main()
+2026-06-14 05:11:43   File "/home/ga111o/document/lecture/physical_ai/assignemnt_mujoco/pipeline/051_finetune_sandwich.py", line 129, in main
+2026-06-14 05:11:43     run(cmd, cwd=ov, extra_env=env)
+2026-06-14 05:11:43   File "/home/ga111o/document/lecture/physical_ai/assignemnt_mujoco/pipeline/pipeline_common.py", line 119, in run
+2026-06-14 05:11:43     return subprocess.run(
+2026-06-14 05:11:43            ^^^^^^^^^^^^^^^
+2026-06-14 05:11:43   File "/home/ga111o/miniforge3/lib/python3.12/subprocess.py", line 571, in run
+2026-06-14 05:11:43     raise CalledProcessError(retcode, process.args,
+2026-06-14 05:11:43 subprocess.CalledProcessError: Command '['/home/ga111o/miniforge3/bin/python3', 'vla-scripts/finetune_sandwich.py', '--vla_path', 'openvla/openvla-7b', '--data_root_dir', '/home/ga111o/document/lecture/physical_ai/assignemnt_mujoco/Raccoonbot_Openvla/tensorflow_datasets', '--dataset_name', 'raccoon_pick_place', '--run_root_dir', '/home/ga111o/document/lecture/physical_ai/assignemnt_mujoco/Raccoonbot_Openvla/openvla/openvla-runs', '--adapter_tmp_dir', '/home/ga111o/document/lecture/physical_ai/assignemnt_mujoco/Raccoonbot_Openvla/openvla/openvla-adapter-tmp', '--quant_backend', 'torchao', '--backbone_precision', 'fp8', '--vision_precision', 'bf16', '--lora_rank', '32', '--vision_lora_rank', '16', '--llm_lora_mode', 'all', '--train_vision_lora', 'True', '--train_projector', 'True', '--train_action_head', 'True', '--batch_size', '4', '--grad_accumulation_steps', '4', '--max_steps', '32000', '--save_steps', '3000', '--learning_rate', '0.0005', '--val_interval_steps', '500', '--val_batches', '10', '--attn_implementation', 'sdpa', '--gradient_checkpointing', 'True', '--use_8bit_optimizer', 'True', '--use_fast_tokenizer', 'False', '--run_id_note', 'sandwich-fp8']' returned non-zero exit status 1.
+2026-06-14 05:11:43 [run_pipeline] STAGE 051 종료 (exit=1, ▲ 0.1s)
+
+2026-06-14 05:11:43 [run_pipeline] ✗ STAGE 051 실패 (exit=1) — 051_finetune_sandwich.py  → 여기서 멈춥니다 (fail-fast).
+2026-06-14 05:11:43 [run_pipeline] 총 소요시간 1.9s | 매니페스트: /home/ga111o/document/lecture/physical_ai/assignemnt_mujoco/pipeline/outputs/runs/20260613T201141Z/manifest.json
