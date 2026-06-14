@@ -1,6 +1,6 @@
 # Efficient VLA Raccoon Control Plane
 
-어떠한 환경에서 진행을 하였는지, 무엇을 변경했는지, 그리고 어떤 결과를 얻었는지 등을 작성한 전체 보고서는 [report/report.pdf](https://github.com/ga111o/efficient-vla-raccoon-control-plane/blob/main/report/report.pdf)에 위치합니다.
+어떠한 환경에서 진행을 하였는지, 무엇을 변경했는지, 그리고 어떤 결과를 얻었는지 등을 작성한 전체 보고서는 [report/report.pdf](https://github.com/ga111o/efficient-vla-raccoon-control-plane/blob/main/report/report.pdf)에 위치합니다. Raccoonbot 동작 영상은 [report/raccoon.mp4](https://github.com/ga111o/efficient-vla-raccoon-control-plane/blob/main/report/raccoon.mp4)에 위치합니다. 
 
 ## repository 구조
 
