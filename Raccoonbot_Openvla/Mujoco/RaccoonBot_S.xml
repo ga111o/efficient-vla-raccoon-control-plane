@@ -1,0 +1,195 @@
+<!-- 로보메이션 라쿤봇 MuJoCo 모델 --> <!-- Robomation RaccoonBot MuJoCo Model -->
+
+<mujoco model="RaccoonBot_S">
+  <compiler inertiafromgeom="false" angle="radian" meshdir="assets"/>
+  <option integrator="implicitfast" timestep="0.0002" cone="elliptic" noslip_iterations="100"/>
+
+  <default>
+    <!-- class 선언 (그룹별로 묶어서 물리계산에 사용할 것과 시각적요소로만 사용할것 분리 -->
+    <default class="collision">
+      <geom group="3" type="mesh" rgba="255 0 0 0.1"/> <!-- 그룹 3부터 안보임. 보려면 키보드 숫자 누르면됨. -->
+    </default>
+
+    <default class="visual">
+      <geom group="1" type="mesh" contype="0" conaffinity="0" material="White"/>
+    </default>
+
+    <!-- 조인트 기본값 설정 -->
+    <joint damping="0.001"></joint>
+  </default>
+
+  <asset>
+    <!-- 색상 정의 -->
+    <material name="White" rgba="0.964706 0.964706 0.952941 1" specular="0.5" shininess="0.5"/>
+    <material name="Black"  rgba="0.2 0.2 0.2 1" specular="0.7" shininess="0.5"/>
+    <material name="Gray"  rgba="0.501960784 0.501960784 0.501960784 1" specular="0.5" shininess="0.5"/>
+    <material name="Silver"  rgba="0.819608 0.8 0.752941 1" specular="0.5" shininess="0.5"/>
+
+    <!-- 물리계산용 덩어리-->
+    <mesh name="base_link" file="base_link.STL"/>
+    <mesh name="Link1" file="Link1.STL"/>
+    <mesh name="Link2" file="Link2.STL"/>
+    <mesh name="Link3" file="Link3.STL"/>
+    <mesh name="Link4" file="Link4.STL"/>
+    <mesh name="Gripper_Body" file="Gripper_Body.STL"/>
+    <mesh name="Gripper_L_Inner" file="Gripper_L_Inner.STL"/>
+    <mesh name="Gripper_L_Outer" file="Gripper_L_Outer.STL"/>
+    <mesh name="Gripper_L_Finger" file="Gripper_L_Finger.STL"/>
+    <mesh name="Gripper_R_Inner" file="Gripper_R_Inner.STL"/>
+    <mesh name="Gripper_R_Outer" file="Gripper_R_Outer.STL"/>
+    <mesh name="Gripper_R_Finger" file="Gripper_R_Finger.STL"/>
+
+        <!-- 색입히기용 파츠 -->
+    <mesh file="visual/Gripper_Left_Finger.STL" scale="0.001 0.001 0.001"/>
+    <mesh file="visual/Gripper_Left_Silicon.STL" scale="0.001 0.001 0.001"/>
+    <mesh file="visual/Gripper_Right_Finger.STL" scale="0.001 0.001 0.001"/>
+    <mesh file="visual/Gripper_Right_Silicon.STL" scale="0.001 0.001 0.001"/>
+    <mesh file="visual/Link1_cover.STL" scale="0.001 0.001 0.001"/>
+    <mesh file="visual/Link1_sticker.STL" scale="0.001 0.001 0.001"/>
+    <mesh file="visual/Link1_white.STL" scale="0.001 0.001 0.001"/>
+    <mesh file="visual/Link2_cover.STL" scale="0.001 0.001 0.001"/>
+    <mesh file="visual/Link2_sticker.STL" scale="0.001 0.001 0.001"/>
+    <mesh file="visual/Link2_white.STL" scale="0.001 0.001 0.001"/>
+    <mesh file="visual/Link3_cover.STL" scale="0.001 0.001 0.001"/>
+    <mesh file="visual/Link3_sticker.STL" scale="0.001 0.001 0.001"/>
+    <mesh file="visual/Link3_white.STL" scale="0.001 0.001 0.001"/>
+    <mesh file="visual/Link4_black_screw.STL" scale="0.001 0.001 0.001"/>
+    <mesh file="visual/Link4_silver_screw.STL" scale="0.001 0.001 0.001"/>
+    <mesh file="visual/Link4_white.STL" scale="0.001 0.001 0.001"/>
+  </asset>
+
+  <worldbody>
+    <body name="Base" pos="0 0 0">
+      <inertial pos="-1.683E-05 -0.014249 0.0092419" mass="0.57431" fullinertia="0.00055171 0.00034874 0.00076716 1E-07 -2.5E-07 -8.36E-06"/>
+      <geom class="collision" type="mesh" mesh="base_link"/> <!-- 물리 계산용 -->
+      <geom class="visual" type="mesh" mesh="base_link"/> <!-- 색칠 -->
+
+      <body name="Link1" pos="0 0 0.057088">
+        <inertial pos="-0.013986 -0.0022667 0.020829" quat="0.2836 0.500773 0.328724 0.748824" mass="0.1138" diaginertia="5.60418e-05 5.26103e-05 3.52979e-05"/>
+        <joint name="Joint1" pos="0 0 0" axis="0 0 1" range="-2.0944 2.0944" damping="0" armature="0" frictionloss="0"/>
+        <geom class="collision" type="mesh" mesh="Link1"/> <!-- 물리 계산용 -->
+        <geom class="visual" type="mesh" mesh="Link1_cover" material="Black"/> <!-- 색칠 -->
+        <geom class="visual" type="mesh" mesh="Link1_sticker" material="Gray"/> <!-- 색칠 -->
+        <geom class="visual" type="mesh" mesh="Link1_white"/> <!-- 색칠 -->
+
+        <body name="Link2" pos="0 0 0.023662" quat="0.499998 -0.5 -0.500002 0.5">
+          <inertial pos="0.0068563 -0.07084 0.008848" quat="0.614196 0.689345 -0.323933 0.206482" mass="0.0687" diaginertia="0.000109909 9.71792e-05 1.81218e-05"/>
+          <joint name="Joint2" pos="0 0 0" axis="0 0 -1" range="-1.5707 0.5237" damping="0" armature="0" frictionloss="0"/>
+          <geom class="collision" type="mesh" mesh="Link2"/> <!-- 물리 계산용 -->
+          <geom class="visual" type="mesh" mesh="Link2_cover" material="Black"/> <!-- 색칠 -->
+          <geom class="visual" type="mesh" mesh="Link2_sticker" material="Gray"/> <!-- 색칠 -->
+          <geom class="visual" type="mesh" mesh="Link2_white"/> <!-- 색칠 -->
+
+          <body name="Link3" pos="1.0056e-05 -0.1 0" quat="-3.67321e-06 0 0 1">
+            <inertial pos="0.0095601 0.090032 0.013618" quat="0.697287 0.617503 -0.178314 0.317308" mass="0.058" diaginertia="5.14233e-05 4.48418e-05 1.03349e-05"/>
+            <joint name="Joint3" pos="0 0 0" axis="0 0 -1" range="-2.618 0" damping="0" armature="0" frictionloss="0"/>
+            <geom class="collision" type="mesh" mesh="Link3"/> <!-- 물리 계산용 -->
+            <geom class="visual" type="mesh" mesh="Link3_cover" material="Black"/> <!-- 색칠 -->
+            <geom class="visual" type="mesh" mesh="Link3_sticker" material="Gray"/> <!-- 색칠 -->
+            <geom class="visual" type="mesh" mesh="Link3_white"/> <!-- 색칠 -->
+
+            <body name="Link4" pos="-1.0056e-05 0.1 0">
+              <inertial pos="0.00246483 0.0280152 0.0033435" quat="0.767161 0.570932 -0.211927 0.201462" mass="0.0247" diaginertia="8.82308e-06 8.70279e-06 3.10133e-06"/>
+              <joint name="Joint4" pos="0 0 0" axis="0 0 -1" range="-1.8326 1.8326" damping="0" armature="0" frictionloss="0"/>
+              <geom class="collision" type="mesh" mesh="Link4"/> <!-- 물리 계산용 -->
+              <geom class="collision" type="mesh" mesh="Gripper_Body"/> <!-- 물리 계산용 -->
+              <geom class="visual" type="mesh" mesh="Link4_black_screw" material="Black"/> <!-- 색칠 -->
+              <geom class="visual" type="mesh" mesh="Link4_silver_screw" material="Silver"/> <!-- 색칠 -->
+              <geom class="visual" type="mesh" mesh="Link4_white"/> <!-- 색칠 -->
+
+              <body name="Gripper_L_Inner" pos="-0.0011487 0.042412 0.005" quat="0.707105 0 0.707108 0">
+                <inertial pos="-0.0059722 0.0072138 -0.0046001" quat="0.653281 0.653281 -0.270598 -0.270598" mass="0.00058" diaginertia="5e-08 5e-08 1e-08"/>
+                <joint name="Gripper_L_Inner" pos="0 0 0" axis="0 0 1" range="-0.85 0.15701"/>
+                <geom class="collision" type="mesh" mesh="Gripper_L_Inner"/> <!-- 물리 계산용 -->
+                <geom class="visual" type="mesh" mesh="Gripper_L_Inner"/> <!-- 색칠 -->
+                <site name="left_inner_site" rgba="255 0 0 0" pos="-0.0153878 0.0170945 -0.0044918" size="0.0025"/> <!-- 조인트 결합용 좌표지점 -->
+              </body>
+
+              <body name="Gripper_L_Outer" pos="-0.0010987 0.042412 0.0125" quat="0.707105 0 0.707108 0">
+                <inertial pos="-0.0084869 0.0087458 -0.0045013" quat="0.5 0.5 -0.5 0.5" mass="0.00053" diaginertia="4e-08 2e-08 2e-08"/>
+                <joint name="Gripper_L_Outer" type="hinge" pos="0 0 0" axis="0 0 1" range="-0.85 0.163"/>
+                <geom class="collision" type="mesh" mesh="Gripper_L_Outer"/> <!-- 물리 계산용 -->
+                <geom class="visual" type="mesh" mesh="Gripper_L_Outer"/> <!-- 색칠 -->
+
+                <body name="Gripper_L_Finger" pos="-0.015385 0.017298 0.00025815">
+                  <inertial pos="0.0061645 0.013303 -0.0049078" quat="0.705781 0.705781 0.0432795 0.0432795" mass="0.002184" diaginertia="2.02462e-07 1.8e-07 3.75379e-08"/>
+                  <joint name="Gripper_L_Finger" type="hinge" pos="0 0 0" axis="0 0 1" range="-0.2 0.9"/>
+                  <geom class="collision" type="mesh" mesh="Gripper_L_Finger"/> <!-- 물리 계산용 -->
+                  <geom class="visual" type="mesh" mesh="Gripper_Left_Finger"/> <!-- 색칠 -->
+                  <geom class="visual" type="mesh" mesh="Gripper_Left_Silicon" material="Black"/> <!-- 색칠 -->
+                  <geom class="collision" name="L_pad" type="box" pos="0.0101845 0.0158542 -0.0048" euler="0 0 -0.03" size="0.0001 0.01 0.00275" rgba="1 1 0 0.5" friction="1 1 1" condim="6" solimp="0.99 0.99 0.001" solref="0.002 1" margin="0.0001" /> <!-- 그리퍼 마찰계산용 박스영역 friction="슬라이딩 비틀림 구름 마찰" -->
+                  <site name="L_touch_site" type="box" pos="0.0101845 0.0158542 -0.0048" euler="0 0 -0.03" size="0.0002 0.0101 0.0028" rgba="0 0 1 0"/>
+                  <site name="left_inner_site2" rgba="0 255 0 0" pos="0.0074969 -0.0002037 -0.0048000" size="0.0025"/> <!-- 조인트 결합용 좌표지점 -->
+                </body>
+              </body>
+
+              <body name="Gripper_R_Inner" pos="-0.0011487 0.041715 -0.0049757" quat="0.707105 0 0.707108 0">
+                <inertial pos="0.0055753 0.0073917 -0.0044419" quat="0.653281 0.653281 0.270598 0.270598" mass="0.00057857" diaginertia="5e-08 5e-08 1e-08"/>
+                <joint name="Gripper_R_Inner" type="hinge" pos="0 0 0" axis="0 0 1" range="-0.15701 0.85"/>
+                <geom class="collision" type="mesh" mesh="Gripper_R_Inner"/> <!-- 물리 계산용 -->
+                <geom class="visual" type="mesh" mesh="Gripper_R_Inner"/> <!-- 색칠 -->
+                <site name="right_inner_site" rgba="255 0 0 0" pos="0.0154019 0.0178000 -0.0044418" size="0.0025"/> <!-- 조인트 결합용 좌표지점 -->
+              </body>
+
+              <body name="Gripper_R_Outer" pos="-0.0010988 0.042412 -0.0125" quat="0.707105 0 0.707108 0">
+                <inertial pos="0.0084821 0.0087504 -0.0045013" quat="0.5 0.5 -0.5 0.5" mass="0.00053" diaginertia="4e-08 2e-08 2e-08"/>
+                <joint name="Gripper_R_Outer" type="hinge" pos="0 0 0" axis="0 0 1" range="-0.181 0.85"/>
+                <geom class="collision" type="mesh" mesh="Gripper_R_Outer"/> <!-- 물리 계산용 -->
+                <geom class="visual" type="mesh" mesh="Gripper_R_Outer"/> <!-- 색칠 -->
+
+                <body name="Gripper_R_Finger" pos="0.015375 0.017307 0.00025815">
+                  <inertial pos="-0.0061642 0.013303 -0.0048578" quat="0.705781 0.705781 -0.0432795 -0.0432795" mass="0.002184" diaginertia="2.02462e-07 1.8e-07 3.75379e-08"/>
+                  <joint name="Gripper_R_Finger" type="hinge" pos="0 0 0" axis="0 0 1" range="-0.9 0.2"/>
+                  <geom class="collision" type="mesh" mesh="Gripper_R_Finger"/> <!-- 물리 계산용 -->
+                  <geom class="visual" type="mesh" mesh="Gripper_Right_Finger"/> <!-- 색칠 -->
+                  <geom class="visual" type="mesh" mesh="Gripper_Right_Silicon" material="Black"/> <!-- 색칠 -->
+                  <geom class="collision" name="R_pad" type="box" pos="-0.0101845 0.0158542 -0.0048" euler="0 0 0.03" size="0.0001 0.01 0.00275" rgba="1 1 0 0.5" friction="1 1 1" condim="6" solimp="0.99 0.99 0.001" solref="0.002 1" margin="0.0001"/> <!-- 그리퍼 마찰계산용 박스영역 friction="슬라이딩 비틀림 구름 마찰" -->
+                  <site name="R_touch_site" type="box" pos="-0.0101845 0.0158542 -0.0048" euler="0 0 0.03" size="0.0002 0.0101 0.0028" rgba="0 0 1 0"/>
+                  <site name="right_inner_site2" rgba="0 255 0 0" pos="-0.0074975 -0.0002036 -0.0047500" size="0.0025"/> <!-- 조인트 결합용 좌표지점 -->
+                </body>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+    </body>
+  </worldbody>
+
+  <equality>
+    <!-- gripper inner joint mirror mode (좌우 대칭 동작) -->
+    <joint name="LR_gripper_mirror" joint1="Gripper_R_Inner" joint2="Gripper_L_Inner" polycoef="0 -1 0 0 0" solref="0.0005 1"/>
+    <!-- gripper joint connection (closed loop 구성) -->
+    <connect anchor="-0.0153878 0.0170945 -0.0044918" body1="Gripper_L_Inner" body2="Gripper_L_Finger" solref="0.001 1"/>
+    <connect anchor="0.0154019 0.0178000 -0.0044418" body1="Gripper_R_Inner" body2="Gripper_R_Finger" solref="0.001 1"/>
+  </equality>
+
+  <contact>
+    <!-- 충돌계산 예외처리 (연산량 감소) -->
+    <exclude body1="Base" body2="Link1"/>
+    <exclude body1="Link4" body2="Gripper_L_Inner"/>
+    <exclude body1="Link4" body2="Gripper_L_Outer"/>
+    <exclude body1="Link4" body2="Gripper_R_Inner"/>
+    <exclude body1="Link4" body2="Gripper_R_Outer"/>
+    <exclude body1="Gripper_L_Inner" body2="Gripper_R_Inner"/>
+    <exclude body1="Gripper_L_Inner" body2="Gripper_L_Outer"/>
+    <exclude body1="Gripper_L_Inner" body2="Gripper_L_Finger"/>
+    <exclude body1="Gripper_R_Inner" body2="Gripper_R_Outer"/>
+    <exclude body1="Gripper_R_Inner" body2="Gripper_R_Finger"/>
+    <exclude body1="Gripper_L_Outer" body2="Gripper_L_Finger"/>
+    <exclude body1="Gripper_R_Outer" body2="Gripper_R_Finger"/>
+  </contact>
+
+  <actuator> <!-- 액추에이터(모터) -->
+    <!-- position 위치제어모드 / name: 제어할 때 부를 이름, joint: 실제로 돌리는 조인트명, kp: 비례Gain, ctrlrange: 입력제한범위 -->
+    <position name="Joint1" joint="Joint1" ctrlrange="-2.0944 2.0944" kp="10" kv="1" forcerange="-0.08 0.08"/> <!-- 단위 rad, Nm -->
+    <position name="Joint2" joint="Joint2" ctrlrange="-1.5707 0.5237" kp="30" kv="10" forcerange="-0.5 0.5"/> <!-- forcerange에 모터스펙 Pull-In Torque 사용 -->
+    <position name="Joint3" joint="Joint3" ctrlrange="-2.6180 0.0000" kp="30" kv="10" forcerange="-0.2 0.2"/>
+    <position name="Joint4" joint="Joint4" ctrlrange="-1.8327 1.8327" kp="30" kv="10" forcerange="-0.2 0.2"/>
+    <position name="Gripper" joint="Gripper_L_Inner" ctrlrange="-0.85 0.15701" kp="2.5" forcerange="-0.05 0.05"/> <!-- 정확한 force 모름 -->  </actuator>
+
+  <sensor>
+    <touch name="sensor_L" site="L_touch_site"/>
+    <touch name="sensor_R" site="R_touch_site"/>
+  </sensor>
+
+</mujoco>

@@ -1,0 +1,697 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.5.1-0-g916b5db  Build Version: 1.5.7152.31018
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="Raccoon.SLDASM">
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="-1.683E-05 -0.014249 0.0092419"
+        rpy="0 0 0" />
+      <mass
+        value="0.57431" />
+      <inertia
+        ixx="0.00055171"
+        ixy="1E-07"
+        ixz="-2.5E-07"
+        iyy="0.00034874"
+        iyz="-8.36E-06"
+        izz="0.00076716" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Raccoon.SLDASM/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Raccoon.SLDASM/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="Link1">
+    <inertial>
+      <origin
+        xyz="-0.013986 -0.0022667 0.020829"
+        rpy="0 0 0" />
+      <mass
+        value="0.1138" />
+      <inertia
+        ixx="3.782E-05"
+        ixy="-4.25E-06"
+        ixz="-5.23E-06"
+        iyy="5.381E-05"
+        iyz="4.4E-07"
+        izz="5.232E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Raccoon.SLDASM/meshes/Link1.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Raccoon.SLDASM/meshes/Link1.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Joint1"
+    type="revolute">
+    <origin
+      xyz="0 0 0.057088"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="Link1" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-2.0944"
+      upper="2.0944"
+      effort="0"
+      velocity="0" />
+    <dynamics
+      damping="0.5" />
+  </joint>
+  <link
+    name="Link2">
+    <inertial>
+      <origin
+        xyz="0.0068563 -0.07084 0.008848"
+        rpy="0 0 0" />
+      <mass
+        value="0.0687" />
+      <inertia
+        ixx="0.00010249"
+        ixy="-1.051E-05"
+        ixz="4.69E-06"
+        iyy="2.164E-05"
+        iyz="-1.41E-05"
+        izz="0.00010108" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Raccoon.SLDASM/meshes/Link2.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Raccoon.SLDASM/meshes/Link2.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Joint2"
+    type="revolute">
+    <origin
+      xyz="0 0 0.023662"
+      rpy="-1.5708 0 1.5708" />
+    <parent
+      link="Link1" />
+    <child
+      link="Link2" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-0.5237"
+      upper="1.5707"
+      effort="0"
+      velocity="0" />
+    <dynamics
+      damping="0.5" />
+  </joint>
+  <link
+    name="Link3">
+    <inertial>
+      <origin
+        xyz="0.0095601 0.090032 0.013618"
+        rpy="0 0 0" />
+      <mass
+        value="0.058" />
+      <inertia
+        ixx="4.769E-05"
+        ixy="5.89E-06"
+        ixz="2.24E-06"
+        iyy="1.241E-05"
+        iyz="6.78E-06"
+        izz="4.65E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Raccoon.SLDASM/meshes/Link3.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Raccoon.SLDASM/meshes/Link3.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Joint3"
+    type="revolute">
+    <origin
+      xyz="1.0056E-05 -0.1 0"
+      rpy="0 0 3.1416" />
+    <parent
+      link="Link2" />
+    <child
+      link="Link3" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="2.618"
+      effort="0"
+      velocity="0" />
+    <dynamics
+      damping="0.5" />
+  </joint>
+  <link
+    name="Link4">
+    <inertial>
+      <origin
+        xyz="0.00025955 0.012236 0.0056516"
+        rpy="0 0 0" />
+      <mass
+        value="0.0105" />
+      <inertia
+        ixx="2.17E-06"
+        ixy="0"
+        ixz="0"
+        iyy="1.06E-06"
+        iyz="6.6E-07"
+        izz="1.67E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Raccoon.SLDASM/meshes/Link4.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Raccoon.SLDASM/meshes/Link4.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Joint4"
+    type="revolute">
+    <origin
+      xyz="-1.0056E-05 0.1 0"
+      rpy="0 0 0" />
+    <parent
+      link="Link3" />
+    <child
+      link="Link4" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-1.8326"
+      upper="1.8326"
+      effort="0"
+      velocity="0" />
+    <dynamics
+      damping="0.5" />
+  </joint>
+  <link
+    name="Gripper_Body">
+    <inertial>
+      <origin
+        xyz="0.0040955 0.039683 0.0016368"
+        rpy="0 0 0" />
+      <mass
+        value="0.0142" />
+      <inertia
+        ixx="1.92E-06"
+        ixy="1.3E-07"
+        ixz="1E-07"
+        iyy="2.28E-06"
+        iyz="7E-08"
+        izz="2.06E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Raccoon.SLDASM/meshes/Gripper_Body.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Raccoon.SLDASM/meshes/Gripper_Body.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Gripper_Body"
+    type="fixed">
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="Link4" />
+    <child
+      link="Gripper_Body" />
+    <axis
+      xyz="0 0 0" />
+    <limit
+      lower="-1.8325"
+      upper="1.8327"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="Gripper_L_Inner">
+    <inertial>
+      <origin
+        xyz="-0.0059722 0.0072138 -0.0046001"
+        rpy="0 0 0" />
+      <mass
+        value="0.00058" />
+      <inertia
+        ixx="3E-08"
+        ixy="-2E-08"
+        ixz="0"
+        iyy="3E-08"
+        iyz="0"
+        izz="5E-08" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Raccoon.SLDASM/meshes/Gripper_L_Inner.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.69804 0.69804 0.69804 0.32" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Raccoon.SLDASM/meshes/Gripper_L_Inner.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Gripper_L_Inner"
+    type="revolute">
+    <origin
+      xyz="-0.0011487 0.042412 0.005"
+      rpy="0 1.5708 0" />
+    <parent
+      link="Gripper_Body" />
+    <child
+      link="Gripper_L_Inner" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0.85"
+      upper="0.15701"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="Gripper_L_Outer">
+    <inertial>
+      <origin
+        xyz="-0.0084869 0.0087458 -0.0045013"
+        rpy="0 0 0" />
+      <mass
+        value="0.00053" />
+      <inertia
+        ixx="2E-08"
+        ixy="0"
+        ixz="0"
+        iyy="2E-08"
+        iyz="0"
+        izz="4E-08" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Raccoon.SLDASM/meshes/Gripper_L_Outer.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.69804 0.69804 0.69804 0.32" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Raccoon.SLDASM/meshes/Gripper_L_Outer.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Gripper_L_Outer"
+    type="revolute">
+    <origin
+      xyz="-0.0010987 0.042412 0.0125"
+      rpy="0 1.5708 0" />
+    <parent
+      link="Gripper_Body" />
+    <child
+      link="Gripper_L_Outer" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-0.85"
+      upper="0.163"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="Gripper_L_Finger">
+    <inertial>
+      <origin
+        xyz="0.0061645 0.013303 -0.0049078"
+        rpy="0 0 0" />
+      <mass
+        value="0.002184" />
+      <inertia
+        ixx="2E-07"
+        ixy="2E-08"
+        ixz="0"
+        iyy="4E-08"
+        iyz="0"
+        izz="1.8E-07" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Raccoon.SLDASM/meshes/Gripper_L_Finger.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Raccoon.SLDASM/meshes/Gripper_L_Finger.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Gripper_L_Finger"
+    type="revolute">
+    <origin
+      xyz="-0.015385 0.017298 0.00025815"
+      rpy="0 0 0" />
+    <parent
+      link="Gripper_L_Outer" />
+    <child
+      link="Gripper_L_Finger" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-0.2"
+      upper="0.9"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="Gripper_R_Inner">
+    <inertial>
+      <origin
+        xyz="0.0055753 0.0073917 -0.0044419"
+        rpy="0 0 0" />
+      <mass
+        value="0.00057857" />
+      <inertia
+        ixx="3E-08"
+        ixy="2E-08"
+        ixz="0"
+        iyy="3E-08"
+        iyz="0"
+        izz="5E-08" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Raccoon.SLDASM/meshes/Gripper_R_Inner.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.69804 0.69804 0.69804 0.32" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Raccoon.SLDASM/meshes/Gripper_R_Inner.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Gripper_R_Inner"
+    type="revolute">
+    <origin
+      xyz="-0.0011487 0.041715 -0.0049757"
+      rpy="0 1.5708 0" />
+    <parent
+      link="Gripper_Body" />
+    <child
+      link="Gripper_R_Inner" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-0.15701"
+      upper="0.85"
+      effort="0"
+      velocity="0" />
+    <mimic
+      joint="Gripper_L_Inner"
+      multiplier="-1"
+      offset="0" />
+  </joint>
+  <link
+    name="Gripper_R_Outer">
+    <inertial>
+      <origin
+        xyz="0.0084821 0.0087504 -0.0045013"
+        rpy="0 0 0" />
+      <mass
+        value="0.00053" />
+      <inertia
+        ixx="2E-08"
+        ixy="0"
+        ixz="0"
+        iyy="2E-08"
+        iyz="0"
+        izz="4E-08" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Raccoon.SLDASM/meshes/Gripper_R_Outer.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.69804 0.69804 0.69804 0.32" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Raccoon.SLDASM/meshes/Gripper_R_Outer.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Gripper_R_Outer"
+    type="revolute">
+    <origin
+      xyz="-0.0010988 0.042412 -0.0125"
+      rpy="0 1.5708 0" />
+    <parent
+      link="Gripper_Body" />
+    <child
+      link="Gripper_R_Outer" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-0.181"
+      upper="0.85"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="Gripper_R_Finger">
+    <inertial>
+      <origin
+        xyz="-0.0061642 0.013303 -0.0048578"
+        rpy="0 0 0" />
+      <mass
+        value="0.002184" />
+      <inertia
+        ixx="2E-07"
+        ixy="-2E-08"
+        ixz="0"
+        iyy="4E-08"
+        iyz="0"
+        izz="1.8E-07" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Raccoon.SLDASM/meshes/Gripper_R_Finger.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Raccoon.SLDASM/meshes/Gripper_R_Finger.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Gripper_R_Finger"
+    type="revolute">
+    <origin
+      xyz="0.015375 0.017307 0.00025815"
+      rpy="0 0 0" />
+    <parent
+      link="Gripper_R_Outer" />
+    <child
+      link="Gripper_R_Finger" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-0.9"
+      upper="0.2"
+      effort="0"
+      velocity="0" />
+  </joint>
+</robot>

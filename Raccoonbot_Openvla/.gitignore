@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+.env
+
+# virtualenv (RB_ROOT/env, created in README step 0)
+env/
+.venv/
+venv/
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+
+# datasets
+tensorflow_datasets/
+Mujoco/raccoon_grasp_colored_cylinder/
+Mujoco/raccoon_dataset/openvla_rlds_intermediate/
+Mujoco/raccoon_dataset/raccoon_grasp_colored_cylinder/
+Mujoco/raccoon_dataset/tensorflow_datasets/
+Mujoco/raccoon_dataset/raccoon_grasp/
+data/
+*.tfrecord
+
+# training outputs / checkpoints
+runs/
+wandb/
+checkpoints/
+openvla-runs/
+openvla-adapter-tmp/
+*.pt
+*.pth
+*.ckpt
+*.safetensors

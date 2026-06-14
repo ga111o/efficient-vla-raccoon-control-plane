@@ -1,0 +1,179 @@
+# Reproducible dependency snapshot of the verified working environment.
+# Captured on Python 3.12.12 (venv created with uv).
+#
+# !!! torch / torchvision are intentionally NOT pinned here !!!
+#     Those wheels are CUDA-specific. Install the build matching the TARGET
+#     machine's CUDA driver FIRST, then install this file. Otherwise you may
+#     pull a CUDA build incompatible with the driver (e.g. a cu130 torch on a
+#     CUDA 12.2 driver fails with "NVIDIA driver is too old").
+#
+# Usage (fresh env):
+#   python3.12 -m venv env && source env/bin/activate
+#   # 1) torch for your CUDA — pick the index matching your driver, e.g.:
+#   #    CUDA 12.x driver:  pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
+#   #    CUDA 13.x driver:  pip install torch torchvision --index-url https://download.pytorch.org/whl/cu130
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
+#   # 2) the rest of the (CUDA-independent) deps:
+#   pip install -r requirements-lock.txt
+#   # 3) local editable packages (relative paths; not listed below):
+#   pip install -e ../dlimp_openvla
+#   pip install -e .
+#
+# NOTE: CUDA-specific packages (torch, torchvision, triton, nvidia-*-cuXX,
+#       cuda-*) are deliberately omitted so this lock stays portable across
+#       machines. `pip install torch ...` in step 1 brings the matching set.
+absl-py==2.4.0
+accelerate==1.13.0
+annotated-types==0.7.0
+apache-beam==2.72.0
+array-record==0.8.3
+asttokens==3.0.1
+astunparse==1.6.3
+attrs==26.1.0
+beartype==0.22.9
+betterproto==1.2.5
+bitsandbytes==0.49.2
+certifi==2026.5.20
+cffi==2.0.0
+charset-normalizer==3.4.7
+click==8.4.1
+comm==0.2.3
+contourpy==1.3.3
+cryptography==47.0.0
+cycler==0.12.1
+debugpy==1.8.20
+decorator==5.3.1
+dm-tree==0.1.10
+dnspython==2.8.0
+docstring-parser==0.18.0
+draccus==0.11.5
+einops==0.8.2
+envoy-data-plane==0.1.0
+etils==1.14.0
+executing==2.2.1
+fastavro==1.12.2
+fasteners==0.20
+filelock==3.29.0
+flatbuffers==25.12.19
+fonttools==4.63.0
+fsspec==2026.4.0
+gast==0.7.0
+gitdb==4.0.12
+gitpython==3.1.50
+glfw==2.10.0
+google-pasta==0.2.0
+googleapis-common-protos==1.75.0
+grpcio==1.80.0
+grpclib==0.4.9
+h2==4.3.0
+h5py==3.14.0
+hf-xet==1.5.0
+hpack==4.1.0
+httplib2==0.31.2
+huggingface-hub==0.36.2
+hyperframe==6.1.0
+idna==3.17
+immutabledict==4.3.1
+importlib-resources==7.1.0
+ipykernel==7.2.0
+ipython==9.14.0
+ipython-pygments-lexers==1.1.1
+jedi==0.20.0
+jinja2==3.1.6
+jsonpath-rw==1.4.0
+jsonpickle==3.4.2
+jupyter-client==8.8.0
+jupyter-core==5.9.1
+keras==3.14.1
+kiwisolver==1.5.0
+libclang==18.1.1
+markdown-it-py==4.2.0
+markupsafe==3.0.3
+matplotlib==3.10.9
+matplotlib-inline==0.2.2
+mdurl==0.1.2
+mergedeep==1.3.4
+ml-dtypes==0.5.4
+mlcroissant==1.1.0
+mpmath==1.3.0
+mujoco==3.9.0
+multidict==6.7.1
+mypy-extensions==1.1.0
+namex==0.1.0
+nest-asyncio==1.6.0
+networkx==3.6.1
+numpy==2.4.6
+objsize==0.7.1
+openexr==3.4.12
+opt-einsum==3.4.0
+optree==0.19.1
+packaging==26.2
+pandas==3.0.3
+pandas-stubs==3.0.3.260530
+parso==0.8.7
+peft==0.11.1
+pexpect==4.9.0
+pillow==12.2.0
+platformdirs==4.10.0
+ply==3.11
+promise==2.3
+prompt-toolkit==3.0.52
+proto-plus==1.28.0
+protobuf==6.33.6
+psutil==7.2.2
+ptyprocess==0.7.0
+pure-eval==0.2.3
+pyarrow==23.0.1
+pyarrow-hotfix==0.7
+pycparser==3.0
+pydantic==2.13.4
+pydantic-core==2.46.4
+pygments==2.20.0
+pymongo==4.17.0
+pyopengl==3.1.10
+pyparsing==3.3.2
+python-dateutil==2.9.0.post0
+pytz==2026.2
+pyyaml==6.0.3
+pyyaml-include==1.4.1
+pyzmq==27.1.0
+rdflib==7.6.0
+regex==2026.5.9
+requests==2.34.2
+rich==15.0.0
+safetensors==0.7.0
+scipy==1.17.1
+sentry-sdk==2.61.0
+setuptools==81.0.0
+simple-parsing==0.1.8
+six==1.17.0
+smmap==5.0.3
+sortedcontainers==2.4.0
+stack-data==0.6.3
+stringcase==1.2.0
+# sympy intentionally NOT pinned: it is a torch transitive dep and torch pins it
+# exactly (torch 2.5.1 -> sympy 1.13.1, torch >=2.6 -> sympy 1.14.0). Let the
+# torch you installed in step 1 decide the matching sympy.
+tensorflow==2.21.0
+tensorflow-datasets==4.9.10
+tensorflow-graphics==2020.5.20
+tensorflow-metadata==1.17.3
+termcolor==3.3.0
+timm==0.9.10
+tokenizers==0.19.1
+toml==0.10.2
+tornado==6.5.6
+tqdm==4.67.3
+traitlets==5.15.0
+transformers==4.40.1
+trimesh==4.12.2
+typing-extensions==4.15.0
+typing-inspect==0.9.0
+typing-inspection==0.4.2
+urllib3==2.7.0
+wandb==0.27.0
+wcwidth==0.7.0
+wheel==0.47.0
+wrapt==2.2.1
+zipp==4.1.0
+zstandard==0.25.0
